@@ -4,22 +4,17 @@ models:
 - name: stg_local_bike__brands
   description: "This model contains information about the brands who provide the products"
   columns:
-    - name: brand_id
+    - name: product_brand_id
       description: "Primary key, unique identifier for each brand"
       tests:
         - unique
         - not_null
-    #- name: brand_name
-     # description: "Primary key, unique identifier for each brand"
-      #tests:
-       # - unique
-        #- not_null
-
+    
 
 - name: stg_local_bike__categories
   description: "This model contains information about the products categories"
   columns:
-    - name: category_id
+    - name: product_category_id
       description: "Primary key, unique identifier for each category"
       tests:
         - unique
@@ -80,13 +75,13 @@ models:
       tests:
           - unique
           - not_null
-    - name: brand_id
+    - name: product_brand_id
       description: "Foreign key linking the product to the corresponding brand."
       tests:
         - relationships:
             name: brand_id_foreign_key_in_stg_local_bike__brands
             to: ref('stg_local_bike__brands')
-            field: brand_id
+            field: product_brand_id
 
         
 - name: stg_local_bike__staffs
@@ -97,13 +92,7 @@ models:
       tests:
           - unique
           - not_null
-    #- name: store_id
-     # description: "Foreign key linking the store to the corresponding staff."
-      #tests:
-       # - relationships:
-          #    name: store_id_foreign_key_in_stg_local_bike__stores
-          #   to: ref('stg_local_bike__stores')
-            #  field: store_id
+  
 
 
 - name: stg_local_bike__stocks
