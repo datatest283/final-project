@@ -1,10 +1,10 @@
 SELECT 
     store_id, 
-    store_name, 
+    store_name,
+    city AS store_city
     -- phone, 
     -- email, 
     -- street, 
-    city AS store_city, 
-    state AS store_state, 
-    zip_code AS store_zip_code
+    -- state AS store_state, 
+    -- zip_code AS store_zip_code
 FROM {{ source('local_bike_dataset', 'stores') }}

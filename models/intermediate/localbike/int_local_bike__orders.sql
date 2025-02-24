@@ -1,39 +1,31 @@
-with order_item_grouped_by_order as (
+WITH order_item_grouped_by_order AS (
 
-select
-    order_item_id,
+SELECT
     order_id,
-    customer_id,
-    order_status,
-    order_date,
-    required_date,
-    shipped_date,
-    store_id,
-    staff_id,
-    sum(total_order_item_amount) as total_order_amount,
-    sum(quantity) as total_items,
-    count(distinct product_id) as total_distinct_items
-from {{ ref('stg_local_bike__order_items') }}
-group by 
     order_item_id,
-    order_id,
-    customer_id,
-    order_status,
-    order_date,
-    required_date,
-    shipped_date,
-    store_id,
-    staff_id,
 
-),
+    sum(total_order_item_amount) AS total_order_amount,
+    sum(product_quantity) AS total_items_by_order,
+    count(DISTINCT product_id) AS total_distinct_items_by_order
+    
+FROM {{ ref('stg_local_bike__order_items') }}
+GROUP BY 
+    order_item_id,
+    order_id
+)
 
-select oi.order_id,
-    oi.customer_id,
-    oi.order_status,
-    oi.order_date,
-    store_id,
-    staff_id,
-    coalesce(oi.total_order_amount, 0) as total_order_amount,
-    coalesce(oi.total_items, 0) as total_items,
-    coalesce(oi.total_distinct_items, 0) as total_distinct_items
-from order_item_grouped_by_order as oi 
+SELECT 
+    oi.order_id,
+    o.order_date,
+    o.customer_id,
+    s.store_name,
+    
+    coalesce(oi.total_order_amount, 0) AS total_order_amount,
+    coalesce(oi.total_items_by_order, 0) AS total_items_by_order,
+    coalesce(oi.total_distinct_items_by_order, 0) AS total_distinct_items_by_order
+FROM order_item_grouped_by_order AS oi
+LEFT JOIN {{ ref('stg_local_bike__orders') }} AS o ON o.order_id = oi.order_id
+LEFT JOIN {{ ref('stg_local_bike__stores') }} AS s ON s.store_id = o.store_id
+
+
+
