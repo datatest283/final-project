@@ -1,0 +1,5 @@
+{
+    "turntable.warehouse": "bigquery",
+    "turntable.dbtVersion": "1.8",
+    "dbt.enableNewLineagePanel": true
+}

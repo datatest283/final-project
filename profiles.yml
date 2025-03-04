@@ -1,0 +1,16 @@
+final-project:
+  outputs:
+    dev:
+      type: bigquery
+      project: databird-final-project
+      dataset: dbt_ina
+      location: US
+      method: service-account
+      priority: interactive
+      keyfile: /Users/idjany/Documents/DataBird/kms/databird-final-project-bbba9ee98799.json
+      threads: 1
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      create_dataset: true
+
+  target: dev
