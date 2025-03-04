@@ -46,5 +46,5 @@ models:
       schema: int_local_bike
   
     mart:
-      schema: mart
+      schema: mrt_local_bike
       +materialized: table
